@@ -1,0 +1,15 @@
+lmSensors:
+  command: sensors
+
+channels:
+  telegramBot:
+    enable: true
+    token: "0000000000:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    chatId: 000000000
+
+sensors:
+  criticalTemperature: 70
+  pollingInterval: 10
+
+report:
+  repeatTimeout: 1800
