@@ -1,0 +1,13 @@
+[Unit]
+Description=Sensors informer service
+After=lm-sensors.service
+Requires=lm-sensors.service
+
+[Service]
+Type=simple
+Restart=always
+User=user
+ExecStart=/usr/local/bin/sensors-informer
+
+[Install]
+WantedBy=multi-user.target
