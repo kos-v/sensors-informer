@@ -1,8 +1,10 @@
 package config
 
 import (
+	"fmt"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
+	"os"
 )
 
 type Config struct {
@@ -26,7 +28,12 @@ type Config struct {
 }
 
 func LoadConfig() (*Config, error) {
-	data, err := ioutil.ReadFile(getConfig())
+	configPath, err := getConfigPath()
+	if err != nil {
+		return nil, err
+	}
+
+	data, err := ioutil.ReadFile(configPath)
 	if err != nil {
 		return nil, err
 	}
@@ -42,8 +49,26 @@ func LoadConfig() (*Config, error) {
 	return &config, err
 }
 
-func getConfig() string {
-	return "./config.yml"
+func getConfigPath() (string, error) {
+	localConfig := "./config.yml"
+	globalConfig := "/etc/sensors-informer/config.yml"
+
+	if isExists(localConfig) {
+		return localConfig, nil
+	} else if isExists(globalConfig) {
+		return globalConfig, nil
+	}
+
+	return "", fmt.Errorf("config not found")
+}
+
+func isExists(path string) bool {
+	_, err := os.Stat(path)
+	if err == nil || !os.IsNotExist(err) {
+		return true
+	}
+
+	return false
 }
 
 func setDefaultValues(config *Config) {
