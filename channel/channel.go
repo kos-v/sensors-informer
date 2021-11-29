@@ -12,6 +12,6 @@ type Channel interface {
 
 func GetChannels(conf config.Config) []Channel {
 	return []Channel{
-		&TelegramBot{conf},
+		&TelegramBotChannel{conf},
 	}
 }

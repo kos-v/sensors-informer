@@ -9,15 +9,15 @@ import (
 	"unicode/utf8"
 )
 
-type TelegramBot struct {
+type TelegramBotChannel struct {
 	Config config.Config
 }
 
-func (ch *TelegramBot) IsEnable() bool {
+func (ch *TelegramBotChannel) IsEnable() bool {
 	return ch.Config.Channels.TelegramBot.Enable
 }
 
-func (ch *TelegramBot) Send(r report.Report) error {
+func (ch *TelegramBotChannel) Send(r report.Report) error {
 	bot, err := botapi.NewBotAPI(ch.Config.Channels.TelegramBot.Token)
 	if err != nil {
 		return ch.hideSecrets(err)
@@ -29,7 +29,7 @@ func (ch *TelegramBot) Send(r report.Report) error {
 	return ch.hideSecrets(err)
 }
 
-func (ch *TelegramBot) format(r report.Report) string {
+func (ch *TelegramBotChannel) format(r report.Report) string {
 	msg := fmt.Sprintf("Critical temperature readings:\n")
 	for _, v := range r.Sensors {
 		msg += fmt.Sprintf("\"%s::%s\": %.1f°С\n", v.BusName, v.SensorName, v.SensorValue)
@@ -37,7 +37,7 @@ func (ch *TelegramBot) format(r report.Report) string {
 	return msg
 }
 
-func (ch *TelegramBot) hideSecrets(err error) error {
+func (ch *TelegramBotChannel) hideSecrets(err error) error {
 	if err == nil {
 		return nil
 	}
