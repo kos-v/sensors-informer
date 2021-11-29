@@ -4,6 +4,7 @@ import (
 	"github.com/kos-v/sensors-informer/internal"
 	"github.com/kos-v/sensors-informer/internal/channel"
 	"github.com/kos-v/sensors-informer/internal/config"
+	"github.com/kos-v/sensors-informer/internal/message"
 	"github.com/kos-v/sensors-informer/internal/report"
 	"github.com/kos-v/sensors-informer/internal/sensor"
 	"log"
@@ -19,7 +20,7 @@ func main() {
 
 	listener := internal.ReportListener{
 		Ch:       rch,
-		Channels: channel.GetChannels(*conf),
+		Channels: channel.GetChannels(*conf, &message.PredictableFormatter{}),
 		Config:   *conf,
 	}
 	listener.Listen()

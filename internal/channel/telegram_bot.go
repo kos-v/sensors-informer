@@ -4,13 +4,15 @@ import (
 	"fmt"
 	botapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"github.com/kos-v/sensors-informer/internal/config"
+	"github.com/kos-v/sensors-informer/internal/message"
 	"github.com/kos-v/sensors-informer/internal/report"
 	"strings"
 	"unicode/utf8"
 )
 
 type TelegramBotChannel struct {
-	Config config.Config
+	Config           config.Config
+	MessageFormatter message.Formatter
 }
 
 func (ch *TelegramBotChannel) IsEnable() bool {
@@ -30,9 +32,12 @@ func (ch *TelegramBotChannel) Send(r report.Report) error {
 }
 
 func (ch *TelegramBotChannel) format(r report.Report) string {
-	msg := fmt.Sprintf("Critical temperature readings:\n")
-	for _, v := range r.Sensors {
-		msg += fmt.Sprintf("\"%s::%s\": %.1f°С\n", v.BusName, v.SensorName, v.SensorValue)
+	msg := ""
+	if t := ch.MessageFormatter.FormatTitle(&r); t != "" {
+		msg += t + ":\n"
+	}
+	for _, v := range ch.MessageFormatter.FormatBodyRows(&r) {
+		msg += v + "\n"
 	}
 	return msg
 }

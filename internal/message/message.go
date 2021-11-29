@@ -1,0 +1,27 @@
+package message
+
+import (
+	"fmt"
+	"github.com/kos-v/sensors-informer/internal/report"
+)
+
+type Formatter interface {
+	FormatTitle(r *report.Report) string
+	FormatBodyRows(r *report.Report) []string
+}
+
+type PredictableFormatter struct{}
+
+func (f *PredictableFormatter) FormatTitle(r *report.Report) string {
+	return "Critical temperature readings"
+}
+
+func (f *PredictableFormatter) FormatBodyRows(r *report.Report) []string {
+	var rows []string
+
+	for _, v := range r.Sensors {
+		rows = append(rows, fmt.Sprintf("\"%s::%s\": %.1f°С", v.BusName, v.SensorName, v.SensorValue))
+	}
+
+	return rows
+}
