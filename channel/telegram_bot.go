@@ -38,6 +38,10 @@ func (ch *TelegramBot) format(r report.Report) string {
 }
 
 func (ch *TelegramBot) hideSecrets(err error) error {
+	if err == nil {
+		return nil
+	}
+
 	return fmt.Errorf(strings.Replace(
 		err.Error(),
 		ch.Config.Channels.TelegramBot.Token,
