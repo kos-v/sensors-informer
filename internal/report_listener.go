@@ -1,9 +1,9 @@
-package main
+package internal
 
 import (
-	"github.com/kos-v/sensors-informer/channel"
-	"github.com/kos-v/sensors-informer/config"
-	r "github.com/kos-v/sensors-informer/report"
+	"github.com/kos-v/sensors-informer/internal/channel"
+	"github.com/kos-v/sensors-informer/internal/config"
+	r "github.com/kos-v/sensors-informer/internal/report"
 	"log"
 	"time"
 )

@@ -1,8 +1,8 @@
 package channel
 
 import (
-	"github.com/kos-v/sensors-informer/config"
-	"github.com/kos-v/sensors-informer/report"
+	"github.com/kos-v/sensors-informer/internal/config"
+	"github.com/kos-v/sensors-informer/internal/report"
 )
 
 type Channel interface {

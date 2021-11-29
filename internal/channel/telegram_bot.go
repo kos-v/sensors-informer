@@ -3,8 +3,8 @@ package channel
 import (
 	"fmt"
 	botapi "github.com/go-telegram-bot-api/telegram-bot-api"
-	"github.com/kos-v/sensors-informer/config"
-	"github.com/kos-v/sensors-informer/report"
+	"github.com/kos-v/sensors-informer/internal/config"
+	"github.com/kos-v/sensors-informer/internal/report"
 	"strings"
 	"unicode/utf8"
 )

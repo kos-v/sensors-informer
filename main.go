@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/kos-v/sensors-informer/channel"
-	"github.com/kos-v/sensors-informer/config"
-	"github.com/kos-v/sensors-informer/report"
-	"github.com/kos-v/sensors-informer/sensor"
+	"github.com/kos-v/sensors-informer/internal"
+	"github.com/kos-v/sensors-informer/internal/channel"
+	"github.com/kos-v/sensors-informer/internal/config"
+	"github.com/kos-v/sensors-informer/internal/report"
+	"github.com/kos-v/sensors-informer/internal/sensor"
 	"log"
 )
 
@@ -16,14 +17,14 @@ func main() {
 
 	rch := make(chan report.Report)
 
-	listener := ReportListener{
+	listener := internal.ReportListener{
 		Ch:       rch,
 		Channels: channel.GetChannels(*conf),
 		Config:   *conf,
 	}
 	listener.Listen()
 
-	detector := Detector{
+	detector := internal.Detector{
 		Config: *conf,
 		Reader: &sensor.CommandReader{conf.LmSensors.Command},
 		Rch:    rch,

@@ -1,7 +1,7 @@
 package report
 
 import (
-	"github.com/kos-v/sensors-informer/sensor"
+	"github.com/kos-v/sensors-informer/internal/sensor"
 	"time"
 )
 
