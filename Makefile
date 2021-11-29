@@ -2,7 +2,7 @@
 
 build: clean
 	@go build -o build/sensors-informer cmd/informer/main.go
-	@cp config.yml.dist build/config.yml
+	@cp etc/conf/config.yml build/config.yml
 
 clean:
 	@rm -rf ./build
