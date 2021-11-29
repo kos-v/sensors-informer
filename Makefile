@@ -1,7 +1,7 @@
 .PHONY: build
 
 build: clean
-	@go build -o build/sensors-informer
+	@go build -o build/sensors-informer cmd/informer/main.go
 	@cp config.yml.dist build/config.yml
 
 clean:
