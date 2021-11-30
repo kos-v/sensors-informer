@@ -3,10 +3,10 @@ lmSensors:
 
 channels:
   file:
-    enable: false
+    enable: true
     path: ./notifications.out
   telegramBot:
-    enable: true
+    enable: false
     token: "0000000000:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     chatId: 000000000
 
