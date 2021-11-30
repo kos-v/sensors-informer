@@ -33,7 +33,7 @@ func (ch *TelegramBotChannel) Send(r report.Report) error {
 
 func (ch *TelegramBotChannel) format(r report.Report) string {
 	msg := ""
-	if t := ch.MessageFormatter.FormatTitle(&r); t != "" {
+	if t := ch.MessageFormatter.FormatTitle(&r, true); t != "" {
 		msg += t + ":\n"
 	}
 	for _, v := range ch.MessageFormatter.FormatBodyRows(&r) {
