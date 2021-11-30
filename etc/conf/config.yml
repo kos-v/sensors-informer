@@ -5,6 +5,11 @@ channels:
   file:
     enable: true
     path: ./notifications.out
+  notifySend:
+    enable: false
+    command: notify-send
+    expireTime: 10
+    hint:
   telegramBot:
     enable: false
     token: "0000000000:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"

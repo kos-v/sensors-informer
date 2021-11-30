@@ -13,6 +13,12 @@ type Config struct {
 			Enable bool
 			Path   string
 		}
+		NotifySend struct {
+			Enable     bool
+			Command    string
+			ExpireTime int `yaml:"expireTime"`
+			Hint       string
+		} `yaml:"notifySend"`
 		TelegramBot struct {
 			Enable bool
 			Token  string
