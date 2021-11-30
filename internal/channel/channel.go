@@ -14,5 +14,6 @@ type Channel interface {
 func GetChannels(conf config.Config, formatter message.Formatter) []Channel {
 	return []Channel{
 		&TelegramBotChannel{Config: conf, MessageFormatter: formatter},
+		&FileChannel{Config: conf, MessageFormatter: formatter},
 	}
 }

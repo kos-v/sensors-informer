@@ -2,6 +2,9 @@ lmSensors:
   command: sensors
 
 channels:
+  file:
+    enable: false
+    path: ./notifications.out
   telegramBot:
     enable: true
     token: "0000000000:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"

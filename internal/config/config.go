@@ -9,6 +9,10 @@ import (
 
 type Config struct {
 	Channels struct {
+		File struct {
+			Enable bool
+			Path   string
+		}
 		TelegramBot struct {
 			Enable bool
 			Token  string
