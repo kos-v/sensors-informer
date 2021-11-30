@@ -15,3 +15,6 @@ install:
 uninstall:
 	@rm -f /usr/local/bin/sensors-informer
 	@rm -rf /etc/sensors-informer/
+
+fmt:
+	@go fmt ./...
