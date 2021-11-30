@@ -38,12 +38,13 @@ func (ch *FileChannel) Send(r report.Report) error {
 	if err != nil {
 		return err
 	}
+	defer file.Close()
 
 	if _, err = file.WriteString(ch.format(r)); err != nil {
 		return err
 	}
 
-	return file.Close()
+	return nil
 }
 
 func (ch *FileChannel) format(r report.Report) string {
