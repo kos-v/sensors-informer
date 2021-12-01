@@ -4,6 +4,7 @@ import (
 	"github.com/kos-v/sensors-informer/internal/config"
 	"github.com/kos-v/sensors-informer/internal/message"
 	"github.com/kos-v/sensors-informer/internal/report"
+	"os"
 	"os/exec"
 	"strconv"
 	"strings"
@@ -34,6 +35,7 @@ func (ch *NotifySendChannel) Send(r report.Report) error {
 
 	args = append(args, ch.MessageFormatter.FormatTitle(&r, false), ch.formatBody(&r))
 
+	os.Setenv("DISPLAY", ":0.0")
 	cmd := exec.Command(ch.Config.Channels.NotifySend.Command, args...)
 	_, err := cmd.Output()
 
