@@ -13,7 +13,7 @@ const (
 
 	busNamePattern    = `^(\w+-+)+\d+$`
 	sensorInfoPattern = `^  (\w*)(:\s*)(\d+\.\d+)$`
-	sensorNamePattern = `^[^ ].+:$`
+	sensorNamePattern = `^([^ ].+):$`
 )
 
 type Bus struct {
@@ -76,7 +76,7 @@ func (p *Parser) Parse() []Bus {
 
 		if p.match(sensorNamePattern, line) {
 			busList[lastBus].Sensors = append(busList[lastBus].Sensors, Sensor{
-				Name: line,
+				Name: p.parseSensorName(line),
 				Type: SensorTypeUnknown,
 			})
 			continue
@@ -124,6 +124,15 @@ func (p *Parser) parseSensorInfo(data string) SensorInfo {
 	return info
 }
 
+func (p *Parser) parseSensorName(data string) string {
+	re, _ := regexp.Compile(sensorNamePattern)
+	matches := re.FindStringSubmatch(data)
+	if len(matches) < 2 {
+		return ""
+	}
+
+	return matches[1]
+}
 func (p *Parser) parseSensorType(data string) string {
 	if strings.HasPrefix(data, "temp") {
 		return SensorTypeTemperature
