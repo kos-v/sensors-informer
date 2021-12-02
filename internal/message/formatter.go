@@ -25,7 +25,7 @@ func (f *PredictableFormatter) FormatBodyRows(r *report.Report) []string {
 	var rows []string
 
 	for _, v := range r.Sensors {
-		rows = append(rows, fmt.Sprintf("\"%s::%s\": %.1f°С", v.BusName, v.SensorName, v.SensorValue))
+		rows = append(rows, fmt.Sprintf("%s::%s: %.1f°С", v.BusName, v.SensorName, v.SensorValue))
 	}
 
 	return rows
