@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"github.com/kos-v/sensors-informer/internal"
 	"github.com/kos-v/sensors-informer/internal/channel"
 	conf "github.com/kos-v/sensors-informer/internal/config"
@@ -11,7 +12,10 @@ import (
 )
 
 func main() {
-	config, err := conf.LoadConfig()
+	specificConfig := flag.String("config", "", "The path to a specific configuration file")
+	flag.Parse()
+
+	config, err := conf.LoadConfig(*specificConfig)
 	if err != nil {
 		log.Fatalf("Error: %v", err)
 	}

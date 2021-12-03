@@ -37,8 +37,8 @@ type Config struct {
 	}
 }
 
-func LoadConfig() (*Config, error) {
-	configPath, err := getConfigPath()
+func LoadConfig(specificConfig string) (*Config, error) {
+	configPath, err := getConfigPath(specificConfig)
 	if err != nil {
 		return nil, err
 	}
@@ -59,11 +59,15 @@ func LoadConfig() (*Config, error) {
 	return &config, err
 }
 
-func getConfigPath() (string, error) {
+func getConfigPath(specificConfig string) (string, error) {
 	localConfig := "./config.yml"
 	globalConfig := "/etc/sensors-informer/config.yml"
 
-	if isExists(localConfig) {
+	if specificConfig != "" {
+		if isExists(specificConfig) {
+			return specificConfig, nil
+		}
+	} else if isExists(localConfig) {
 		return localConfig, nil
 	} else if isExists(globalConfig) {
 		return globalConfig, nil
