@@ -24,8 +24,10 @@ To uninstall run (you may need root-rights): `make uninstall`
 
 ## Configuring
 
-To start the service, you need a configuration file, a template of which is in the `./etc/conf/` repository folder. When installing the service to the system directory, the template will be copied to the directory `/etc/sensors-informer`, after which you need to configure the necessary channels and other parameters.
-It is also possible to load a local config file, for this put the config in the same directory with the executable file.
+To start the service, you need a configuration file, a template of which is in the `./etc/conf/` repository folder. When installing the service to the system directory, the template will be copied to the directory `/etc/sensors-informer`, after which you need to configure the necessary channels and other parameters.  
+
+It is also possible to load a local config file, for this put the config in the same directory with the executable file.  
+
 In addition, you can pass the path to the config via the `-config=/path/config.yml` argument when starting the service.
 
 Only one config can be loaded and with this priority:
