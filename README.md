@@ -16,3 +16,7 @@ You can install this service and the global configuration file to the system dir
 
 Run (you may need root-rights): `make install`
 
+#### Uninstallation
+
+To uninstall run (you may need root-rights): `make uninstall`
+
