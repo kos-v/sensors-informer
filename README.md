@@ -1,6 +1,8 @@
 # Sensors informer
 
-#### Compilation
+## Building, installation, etc
+
+### Compilation
 
 To compile, you must have installed Go at least version 16.
 
@@ -10,13 +12,13 @@ To compile, you must have installed Go at least version 16.
 
 3. `make`
 
-#### Installation
+### Installation
 
 You can install this service and the global configuration file to the system directory.
 
 Run (you may need root-rights): `make install`
 
-#### Uninstallation
+### Uninstallation
 
 To uninstall run (you may need root-rights): `make uninstall`
 
