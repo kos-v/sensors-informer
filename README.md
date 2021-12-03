@@ -1,6 +1,8 @@
 # Sensors informer
 
-#### Installation and Run
+#### Compilation
+
+To compile, you must have installed Go at least version 16.
 
 1. `git clone https://github.com/kos-v/sensors-informer.git`
 
@@ -8,8 +10,9 @@
 
 3. `make`
 
-4. `make install`
+#### Installation
 
-5. Configure `/etc/sensors-informer/config.yml`
+You can install this service and the global configuration file to the system directory.
 
-6. Run command `sensors-informer`
+Run (you may need root-rights): `make install`
+
