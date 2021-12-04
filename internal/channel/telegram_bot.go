@@ -6,8 +6,7 @@ import (
 	"github.com/kos-v/sensors-informer/internal/config"
 	"github.com/kos-v/sensors-informer/internal/message"
 	"github.com/kos-v/sensors-informer/internal/report"
-	"strings"
-	"unicode/utf8"
+	"github.com/kos-v/sensors-informer/internal/security"
 )
 
 type TelegramBotChannel struct {
@@ -22,13 +21,13 @@ func (ch *TelegramBotChannel) IsEnable() bool {
 func (ch *TelegramBotChannel) Send(r report.Report) error {
 	bot, err := botapi.NewBotAPI(ch.Config.Channels.TelegramBot.Token)
 	if err != nil {
-		return ch.hideSecrets(err)
+		return ch.hideErrorSecrets(err)
 	}
 
 	msg := botapi.NewMessage(ch.Config.Channels.TelegramBot.ChatId, ch.format(r))
 	_, err = bot.Send(msg)
 
-	return ch.hideSecrets(err)
+	return ch.hideErrorSecrets(err)
 }
 
 func (ch *TelegramBotChannel) format(r report.Report) string {
@@ -42,15 +41,10 @@ func (ch *TelegramBotChannel) format(r report.Report) string {
 	return msg
 }
 
-func (ch *TelegramBotChannel) hideSecrets(err error) error {
+func (ch *TelegramBotChannel) hideErrorSecrets(err error) error {
 	if err == nil {
 		return nil
 	}
 
-	return fmt.Errorf(strings.Replace(
-		err.Error(),
-		ch.Config.Channels.TelegramBot.Token,
-		strings.Repeat("*", utf8.RuneCountInString(ch.Config.Channels.TelegramBot.Token)),
-		-1,
-	))
+	return fmt.Errorf(security.HideSecrets([]string{ch.Config.Channels.TelegramBot.Token}, err.Error()))
 }
