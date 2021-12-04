@@ -49,8 +49,8 @@ func (ch *FileChannel) Send(r report.Report) error {
 
 func (ch *FileChannel) format(r report.Report) string {
 	msg := ""
-	if t := ch.MessageFormatter.FormatTitle(&r, true); t != "" {
-		msg += t + ":\n"
+	if t := ch.MessageFormatter.FormatTitle(&r); t != "" {
+		msg += t + "\n"
 	}
 
 	for _, v := range ch.MessageFormatter.FormatBodyRows(&r) {

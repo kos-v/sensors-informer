@@ -29,6 +29,11 @@ type Config struct {
 		Command string
 	} `yaml:"lmSensors"`
 	Report struct {
+		Message struct {
+			Title struct {
+				Text string
+			}
+		}
 		RepeatTimeout uint `yaml:"repeatTimeout"`
 	}
 	Sensors struct {

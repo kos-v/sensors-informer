@@ -24,7 +24,7 @@ func main() {
 
 	listener := internal.ReportListener{
 		Ch:       rch,
-		Channels: channel.GetChannels(*config, &message.PredictableFormatter{}),
+		Channels: channel.GetChannels(*config, &message.PredictableFormatter{Config: *config}),
 		Config:   *config,
 	}
 	listener.Listen()

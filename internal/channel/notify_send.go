@@ -33,7 +33,7 @@ func (ch *NotifySendChannel) Send(r report.Report) error {
 		args = append(args, "-h", ch.Config.Channels.NotifySend.Hint)
 	}
 
-	args = append(args, ch.MessageFormatter.FormatTitle(&r, false), ch.formatBody(&r))
+	args = append(args, ch.MessageFormatter.FormatTitle(&r), ch.formatBody(&r))
 
 	os.Setenv("DISPLAY", ":0.0")
 	cmd := exec.Command(ch.Config.Channels.NotifySend.Command, args...)

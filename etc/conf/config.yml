@@ -20,4 +20,7 @@ sensors:
   pollingInterval: 10
 
 report:
+  message:
+    title:
+      text: "Critical temperature readings [{timestamp}]:"
   repeatTimeout: 1800
