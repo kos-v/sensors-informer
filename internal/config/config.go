@@ -7,22 +7,26 @@ import (
 	"os"
 )
 
+type ChannelsCommonConfig struct {
+	Enable bool
+}
+
 type Config struct {
 	Channels struct {
 		File struct {
-			Enable bool
-			Path   string
+			ChannelsCommonConfig `yaml:",inline"`
+			Path                 string
 		}
 		NotifySend struct {
-			Enable     bool
-			Command    string
-			ExpireTime int `yaml:"expireTime"`
-			Hint       string
+			ChannelsCommonConfig `yaml:",inline"`
+			Command              string
+			ExpireTime           int `yaml:"expireTime"`
+			Hint                 string
 		} `yaml:"notifySend"`
 		TelegramBot struct {
-			Enable bool
-			Token  string
-			ChatId int64 `yaml:"chatId"`
+			ChannelsCommonConfig `yaml:",inline"`
+			Token                string
+			ChatId               int64 `yaml:"chatId"`
 		} `yaml:"telegramBot"`
 	}
 	LmSensors struct {
