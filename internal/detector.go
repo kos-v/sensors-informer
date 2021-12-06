@@ -57,7 +57,7 @@ func (d *Detector) detect() (r.Report, error) {
 			if d.Config.Sensors.CriticalTemperatureUnit == temperature.UnitFahrenheit {
 				tempVal = convert.ToFahrenheit(temperature.UnitCelsius, tempVal)
 			}
-			if tempVal > d.Config.Sensors.CriticalTemperature {
+			if tempVal >= d.Config.Sensors.CriticalTemperature {
 				report.AddSensorReport(bus, sensor)
 			}
 		}
