@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"github.com/kos-v/sensors-informer/internal/temperature"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"os"
@@ -41,8 +42,8 @@ type Config struct {
 		RepeatTimeout uint `yaml:"repeatTimeout"`
 	}
 	Sensors struct {
-		CriticalTemperature float32 `yaml:"criticalTemperature"`
-		PollingInterval     uint    `yaml:"pollingInterval"`
+		CriticalTemperature temperature.Value `yaml:"criticalTemperature"`
+		PollingInterval     uint              `yaml:"pollingInterval"`
 	}
 }
 
