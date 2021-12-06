@@ -1,30 +1,69 @@
+# lm_sensors options
 lmSensors:
+  # Path to the "sensors" command
   command: sensors
 
+# List of channels to which you can send a notification.
+# Enabling/disabling a channel is controlled by the "enable" parameter, which by default is false.
 channels:
+  # Sends a notification to a file, the path to which is specified in the "path" parameter
+  # Can be used, for example, when testing, debugging or other cases.
   file:
+    # Enable/disable
     enable: true
+    # The path to a file
     path: ./notifications.out
+  # Sends a notification to the notify-send program, which is often installed in gnome
+  # and other graphical unix-shells on a desktop.
+  # See https://manpages.ubuntu.com/manpages/xenial/man1/notify-send.1.html
   notifySend:
+    # Enable/disable
     enable: false
+    # Path to the "notify-send" command
     command: notify-send
+    # Specifies the urgency level (low, normal, critical)
+    # See notify-send documentation.
     urgency: critical
+    # Specifies the timeout in milliseconds at which to expire the notification.
+    # See notify-send documentation.
     expireTime: 10
+    # Specifies basic extra data to pass. Valid types are int, double, string and byte.
+    # See notify-send documentation.
     hint:
+  # Sends a notification to your telegram bot
   telegramBot:
+    # Enable/disable
     enable: false
+    # The token that you received when creating a bot through @BotFather
     token: "0000000000:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    # The id of a chat that you initiated with your bot.
+    # The chat ID can only be obtained by calling the telegram api method: https://api.telegram.org/bot{token}/getUpdates
+    # where, {token} is a token issued when creating a bot through @BotFather.
     chatId: 000000000
 
+# Sensors options
 sensors:
+  # Temperature at which a notification will be sent
   criticalTemperature: 70
+  # The unit of measure for the criticalTemperature parameter. Default: celsius.
+  # Valid options: "c" (celsius), "f" (fahrenheit).
   criticalTemperatureUnit: c
+  # Temperature check interval in seconds
   pollingInterval: 10
 
+# Notification options
 report:
+  # Format of notification
   format:
+    # The format in which the temperature will be displayed in a notification.
+    # Valid options: "c" (celsius), "f" (fahrenheit).
     temperatureUnit: с
+  # Format of notification text
   message:
+    # Title format
     title:
+      # Title text.
+      # If you specify {timestamp}, then the title will contain the date when the notification was generated.
       text: "Critical temperature readings [{timestamp}]:"
+  # Time in seconds when a notification can be resubmitted
   repeatTimeout: 1800
