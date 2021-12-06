@@ -84,13 +84,15 @@ channels:
 
 # Sensors options
 sensors:
-  # Temperature at which a notification will be sent
-  criticalTemperature: 70
-  # The unit of measure for the criticalTemperature parameter. Default: celsius.
-  # Valid options: "c" (celsius), "f" (fahrenheit).
-  criticalTemperatureUnit: c
   # Temperature check interval in seconds
   pollingInterval: 10
+  # Temperature sensor options
+  temperature:
+    # Temperature at which a notification will be sent
+    critical: 40
+    # The unit of measure for the critical parameter. Default: celsius.
+    # Valid options: "c" (celsius), "f" (fahrenheit).
+    unit: c
 
 # Notification options
 report:

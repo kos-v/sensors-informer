@@ -47,9 +47,11 @@ type Config struct {
 		RepeatTimeout uint `yaml:"repeatTimeout"`
 	}
 	Sensors struct {
-		CriticalTemperature     temperature.Value `yaml:"criticalTemperature"`
-		CriticalTemperatureUnit temperature.Unit  `yaml:"criticalTemperatureUnit"`
-		PollingInterval         uint              `yaml:"pollingInterval"`
+		PollingInterval uint `yaml:"pollingInterval"`
+		Temperature     struct {
+			Critical temperature.Value
+			Unit     temperature.Unit
+		}
 	}
 }
 
@@ -108,8 +110,8 @@ func setDefaultValues(config *Config) {
 	if config.Report.RepeatTimeout < 60 {
 		config.Report.RepeatTimeout = 60
 	}
-	if !temperature.IsSupportedUnit(config.Sensors.CriticalTemperatureUnit) {
-		config.Sensors.CriticalTemperatureUnit = temperature.UnitCelsius
+	if !temperature.IsSupportedUnit(config.Sensors.Temperature.Unit) {
+		config.Sensors.Temperature.Unit = temperature.UnitCelsius
 	}
 	if !temperature.IsSupportedUnit(config.Report.Format.TemperatureUnit) {
 		config.Report.Format.TemperatureUnit = temperature.UnitCelsius
