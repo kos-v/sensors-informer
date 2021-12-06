@@ -34,6 +34,9 @@ type Config struct {
 		Command string
 	} `yaml:"lmSensors"`
 	Report struct {
+		Format struct {
+			TemperatureUnit temperature.Unit `yaml:"temperatureUnit"`
+		}
 		Message struct {
 			Title struct {
 				Text string
@@ -101,5 +104,8 @@ func setDefaultValues(config *Config) {
 	}
 	if config.Report.RepeatTimeout < 60 {
 		config.Report.RepeatTimeout = 60
+	}
+	if !temperature.IsSupportedUnit(config.Report.Format.TemperatureUnit) {
+		config.Report.Format.TemperatureUnit = temperature.UnitCelsius
 	}
 }

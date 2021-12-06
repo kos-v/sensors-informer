@@ -20,6 +20,8 @@ sensors:
   pollingInterval: 10
 
 report:
+  format:
+    temperatureUnit: с
   message:
     title:
       text: "Critical temperature readings [{timestamp}]:"

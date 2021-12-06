@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"github.com/kos-v/sensors-informer/internal/config"
 	"github.com/kos-v/sensors-informer/internal/report"
+	"github.com/kos-v/sensors-informer/internal/temperature"
+	tconvert "github.com/kos-v/sensors-informer/internal/temperature/convert"
 	"strings"
 )
 
@@ -36,7 +38,14 @@ func (f *PredictableFormatter) FormatBodyRows(r *report.Report) []string {
 	var rows []string
 
 	for _, v := range r.Sensors {
-		rows = append(rows, fmt.Sprintf("%s::%s: %.1f°С", v.BusName, v.SensorName, v.SensorValue))
+		sensorValue := temperature.Value(v.SensorValue)
+		unitLabel := "C"
+		if f.Config.Report.Format.TemperatureUnit == temperature.UnitFahrenheit {
+			sensorValue = tconvert.ToFahrenheit(temperature.UnitCelsius, sensorValue)
+			unitLabel = "F"
+		}
+
+		rows = append(rows, fmt.Sprintf("%s::%s: %.1f°%s", v.BusName, v.SensorName, sensorValue, unitLabel))
 	}
 
 	return rows
