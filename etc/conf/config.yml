@@ -17,6 +17,7 @@ channels:
 
 sensors:
   criticalTemperature: 70
+  criticalTemperatureUnit: c
   pollingInterval: 10
 
 report:

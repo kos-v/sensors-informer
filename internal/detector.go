@@ -5,6 +5,7 @@ import (
 	r "github.com/kos-v/sensors-informer/internal/report"
 	s "github.com/kos-v/sensors-informer/internal/sensor"
 	"github.com/kos-v/sensors-informer/internal/temperature"
+	"github.com/kos-v/sensors-informer/internal/temperature/convert"
 	"log"
 	"sync"
 	"time"
@@ -52,7 +53,11 @@ func (d *Detector) detect() (r.Report, error) {
 				continue
 			}
 
-			if temperature.Value(sensor.GetInputInfo().GetValueAsInt()) > d.Config.Sensors.CriticalTemperature {
+			tempVal := temperature.Value(sensor.GetInputInfo().GetValueAsInt())
+			if d.Config.Sensors.CriticalTemperatureUnit == temperature.UnitFahrenheit {
+				tempVal = convert.ToFahrenheit(temperature.UnitCelsius, tempVal)
+			}
+			if tempVal > d.Config.Sensors.CriticalTemperature {
 				report.AddSensorReport(bus, sensor)
 			}
 		}
