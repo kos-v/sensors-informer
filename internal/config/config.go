@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	notifySend "github.com/kos-v/sensors-informer/internal/notify-send"
 	"github.com/kos-v/sensors-informer/internal/temperature"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
@@ -21,6 +22,7 @@ type Config struct {
 		NotifySend struct {
 			ChannelsCommonConfig `yaml:",inline"`
 			Command              string
+			Urgency              notifySend.Urgency
 			ExpireTime           int `yaml:"expireTime"`
 			Hint                 string
 		} `yaml:"notifySend"`
@@ -111,5 +113,8 @@ func setDefaultValues(config *Config) {
 	}
 	if !temperature.IsSupportedUnit(config.Report.Format.TemperatureUnit) {
 		config.Report.Format.TemperatureUnit = temperature.UnitCelsius
+	}
+	if !notifySend.IsValidUrgency(config.Channels.NotifySend.Urgency) {
+		config.Channels.NotifySend.Urgency = notifySend.UrgencyNormal
 	}
 }

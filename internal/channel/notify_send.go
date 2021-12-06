@@ -22,7 +22,7 @@ func (ch *NotifySendChannel) IsEnable() bool {
 func (ch *NotifySendChannel) Send(r report.Report) error {
 	args := []string{
 		"-u",
-		"critical",
+		string(ch.Config.Channels.NotifySend.Urgency),
 		"-t",
 		strconv.Itoa(ch.Config.Channels.NotifySend.ExpireTime),
 		"-a",
