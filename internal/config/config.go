@@ -96,11 +96,7 @@ func getConfigPath(specificConfig string) (string, error) {
 
 func isExists(path string) bool {
 	_, err := os.Stat(path)
-	if err == nil || !os.IsNotExist(err) {
-		return true
-	}
-
-	return false
+	return err == nil || !os.IsNotExist(err)
 }
 
 func setDefaultValues(config *Config) {
