@@ -1,6 +1,6 @@
 # Sensors informer
 
-This service checks indicators from lm_sensors (Linux monitoring sensors) and
+This service checks data from lm_sensors (Linux monitoring sensors) and
 sends notifications when critical indicators are reached.
 
 ## Building, installation, etc
