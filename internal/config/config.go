@@ -9,28 +9,34 @@ import (
 	"os"
 )
 
-type ChannelsCommonConfig struct {
+type ChannelsCommonOpts struct {
 	Enable bool
+}
+
+type FileChannelOpts struct {
+	ChannelsCommonOpts `yaml:",inline"`
+	Path               string
+}
+
+type NotifySendChannelOpts struct {
+	ChannelsCommonOpts `yaml:",inline"`
+	Command            string
+	Urgency            notifySend.Urgency
+	ExpireTime         int `yaml:"expireTime"`
+	Hint               string
+}
+
+type TelegramBotChannelOpts struct {
+	ChannelsCommonOpts `yaml:",inline"`
+	Token              string
+	ChatId             int64 `yaml:"chatId"`
 }
 
 type Config struct {
 	Channels struct {
-		File struct {
-			ChannelsCommonConfig `yaml:",inline"`
-			Path                 string
-		}
-		NotifySend struct {
-			ChannelsCommonConfig `yaml:",inline"`
-			Command              string
-			Urgency              notifySend.Urgency
-			ExpireTime           int `yaml:"expireTime"`
-			Hint                 string
-		} `yaml:"notifySend"`
-		TelegramBot struct {
-			ChannelsCommonConfig `yaml:",inline"`
-			Token                string
-			ChatId               int64 `yaml:"chatId"`
-		} `yaml:"telegramBot"`
+		File        FileChannelOpts
+		NotifySend  NotifySendChannelOpts  `yaml:"notifySend"`
+		TelegramBot TelegramBotChannelOpts `yaml:"telegramBot"`
 	}
 	LmSensors struct {
 		Command string
