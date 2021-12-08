@@ -27,11 +27,11 @@ type Formatter interface {
 }
 
 type PredictableFormatter struct {
-	Config config.Config
+	Opts config.ReportFormatOpts
 }
 
 func (f *PredictableFormatter) FormatTitle(r *report.Report) string {
-	return execPlaceholders(r, f.Config.Report.Format.Title.Text)
+	return execPlaceholders(r, f.Opts.Title.Text)
 }
 
 func (f *PredictableFormatter) FormatBodyRows(r *report.Report) []string {
@@ -40,7 +40,7 @@ func (f *PredictableFormatter) FormatBodyRows(r *report.Report) []string {
 	for _, v := range r.Sensors {
 		sensorValue := temperature.Value(v.SensorValue)
 		unitLabel := "C"
-		if f.Config.Report.Format.TemperatureUnit == temperature.UnitFahrenheit {
+		if f.Opts.TemperatureUnit == temperature.UnitFahrenheit {
 			sensorValue = tconvert.ToFahrenheit(temperature.UnitCelsius, sensorValue)
 			unitLabel = "F"
 		}

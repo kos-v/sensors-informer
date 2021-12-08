@@ -32,6 +32,13 @@ type TelegramBotChannelOpts struct {
 	ChatId             int64 `yaml:"chatId"`
 }
 
+type ReportFormatOpts struct {
+	TemperatureUnit temperature.Unit `yaml:"temperatureUnit"`
+	Title           struct {
+		Text string
+	}
+}
+
 type Config struct {
 	Channels struct {
 		File        FileChannelOpts
@@ -42,12 +49,7 @@ type Config struct {
 		Command string
 	} `yaml:"lmSensors"`
 	Report struct {
-		Format struct {
-			TemperatureUnit temperature.Unit `yaml:"temperatureUnit"`
-			Title           struct {
-				Text string
-			}
-		}
+		Format        ReportFormatOpts
 		RepeatTimeout uint `yaml:"repeatTimeout"`
 	}
 	Sensors struct {
