@@ -31,7 +31,7 @@ type PredictableFormatter struct {
 }
 
 func (f *PredictableFormatter) FormatTitle(r *report.Report) string {
-	return execPlaceholders(r, f.Config.Report.Message.Title.Text)
+	return execPlaceholders(r, f.Config.Report.Format.Title.Text)
 }
 
 func (f *PredictableFormatter) FormatBodyRows(r *report.Report) []string {

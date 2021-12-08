@@ -38,9 +38,7 @@ type Config struct {
 	Report struct {
 		Format struct {
 			TemperatureUnit temperature.Unit `yaml:"temperatureUnit"`
-		}
-		Message struct {
-			Title struct {
+			Title           struct {
 				Text string
 			}
 		}
