@@ -10,21 +10,21 @@ import (
 )
 
 type TelegramBotChannel struct {
-	Config           config.Config
+	Opts             config.TelegramBotChannelOpts
 	MessageFormatter message.Formatter
 }
 
 func (ch *TelegramBotChannel) IsEnable() bool {
-	return ch.Config.Channels.TelegramBot.Enable
+	return ch.Opts.Enable
 }
 
 func (ch *TelegramBotChannel) Send(r report.Report) error {
-	bot, err := botapi.NewBotAPI(ch.Config.Channels.TelegramBot.Token)
+	bot, err := botapi.NewBotAPI(ch.Opts.Token)
 	if err != nil {
 		return ch.hideErrorSecrets(err)
 	}
 
-	msg := botapi.NewMessage(ch.Config.Channels.TelegramBot.ChatId, ch.format(r))
+	msg := botapi.NewMessage(ch.Opts.ChatId, ch.format(r))
 	_, err = bot.Send(msg)
 
 	return ch.hideErrorSecrets(err)
@@ -46,5 +46,5 @@ func (ch *TelegramBotChannel) hideErrorSecrets(err error) error {
 		return nil
 	}
 
-	return fmt.Errorf(security.HideSecrets([]string{ch.Config.Channels.TelegramBot.Token}, err.Error()))
+	return fmt.Errorf(security.HideSecrets([]string{ch.Opts.Token}, err.Error()))
 }

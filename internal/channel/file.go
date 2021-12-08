@@ -10,16 +10,16 @@ import (
 )
 
 type FileChannel struct {
-	Config           config.Config
+	Opts             config.FileChannelOpts
 	MessageFormatter message.Formatter
 }
 
 func (ch *FileChannel) IsEnable() bool {
-	return ch.Config.Channels.File.Enable
+	return ch.Opts.Enable
 }
 
 func (ch *FileChannel) Send(r report.Report) error {
-	path := ch.Config.Channels.File.Path
+	path := ch.Opts.Path
 	if path == "" {
 		return fmt.Errorf("path is not specified in the config file")
 	}

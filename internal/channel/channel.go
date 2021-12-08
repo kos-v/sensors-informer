@@ -1,7 +1,7 @@
 package channel
 
 import (
-	"github.com/kos-v/sensors-informer/internal/config"
+	conf "github.com/kos-v/sensors-informer/internal/config"
 	"github.com/kos-v/sensors-informer/internal/message"
 	"github.com/kos-v/sensors-informer/internal/report"
 )
@@ -11,10 +11,10 @@ type Channel interface {
 	Send(r report.Report) error
 }
 
-func GetChannels(conf config.Config, formatter message.Formatter) []Channel {
+func GetChannels(config conf.Config, formatter message.Formatter) []Channel {
 	return []Channel{
-		&TelegramBotChannel{Config: conf, MessageFormatter: formatter},
-		&FileChannel{Config: conf, MessageFormatter: formatter},
-		&NotifySendChannel{Config: conf, MessageFormatter: formatter},
+		&TelegramBotChannel{Opts: config.Channels.TelegramBot, MessageFormatter: formatter},
+		&FileChannel{Opts: config.Channels.File, MessageFormatter: formatter},
+		&NotifySendChannel{Opts: config.Channels.NotifySend, MessageFormatter: formatter},
 	}
 }

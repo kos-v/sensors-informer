@@ -11,32 +11,32 @@ import (
 )
 
 type NotifySendChannel struct {
-	Config           config.Config
+	Opts             config.NotifySendChannelOpts
 	MessageFormatter message.Formatter
 }
 
 func (ch *NotifySendChannel) IsEnable() bool {
-	return ch.Config.Channels.NotifySend.Enable
+	return ch.Opts.Enable
 }
 
 func (ch *NotifySendChannel) Send(r report.Report) error {
 	args := []string{
 		"-u",
-		string(ch.Config.Channels.NotifySend.Urgency),
+		string(ch.Opts.Urgency),
 		"-t",
-		strconv.Itoa(ch.Config.Channels.NotifySend.ExpireTime),
+		strconv.Itoa(ch.Opts.ExpireTime),
 		"-a",
 		"sensors-informer",
 	}
 
-	if ch.Config.Channels.NotifySend.Hint != "" {
-		args = append(args, "-h", ch.Config.Channels.NotifySend.Hint)
+	if ch.Opts.Hint != "" {
+		args = append(args, "-h", ch.Opts.Hint)
 	}
 
 	args = append(args, ch.formatTitle(&r), ch.formatBody(&r))
 
 	os.Setenv("DISPLAY", ":0.0")
-	cmd := exec.Command(ch.Config.Channels.NotifySend.Command, args...)
+	cmd := exec.Command(ch.Opts.Command, args...)
 	_, err := cmd.Output()
 
 	return err
