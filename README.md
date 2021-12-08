@@ -104,9 +104,7 @@ report:
     # The format in which the temperature will be displayed in a notification.
     # Valid options: "c" (celsius), "f" (fahrenheit).
     temperatureUnit: с
-  # Format of notification text
-  message:
-    # Title format
+    # Format of notification title
     title:
       # Title text.
       # If you specify {timestamp}, then the title will contain the date when the notification was generated.
