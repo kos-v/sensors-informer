@@ -74,6 +74,37 @@ channels:
     # Specifies basic extra data to pass. Valid types are int, double, string and byte.
     # See notify-send documentation.
     hint:
+  # Sends a notification to a email via smtp
+  smtp:
+    # Enable/disable
+    enable: false
+    # Username for authentication
+    username: sender@example.local
+    # Password for authentication
+    password: "password"
+    # Connection SMTP host
+    host: smtp.example.local
+    # Connection port
+    port: 465
+    # Sender data
+    from:
+      # Sender's email address
+      email: sender@example.local
+      # Sender name
+      name: Sensors Informer
+    # List of email recipients
+    to: [ recipient@example.local]
+    # Encryption type. Valid values: ssl, tls, starttls.
+    encryption: ssl
+    # TLS encryption parameters
+    tls:
+      # InsecureSkipVerify controls whether a client verifies the server's certificate chain and host name.
+      # If InsecureSkipVerify is true, TLS  accepts any certificate presented by the server and any host name in that certificate.
+      # In this mode, TLS is susceptible to machine-in-the-middle attacks unless custom verification is used.
+      insecureSkipVerify: false
+      # ServerName is used to verify the hostname on the returned certificates unless InsecureSkipVerify is given.
+      # It is also included in the client's handshake to support virtual hosting unless it is an IP address.
+      serverName:
   # Sends a notification to your telegram bot
   telegramBot:
     # Enable/disable

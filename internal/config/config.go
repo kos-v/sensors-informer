@@ -26,6 +26,24 @@ type NotifySendChannelOpts struct {
 	Hint               string
 }
 
+type SmtpChannelOpts struct {
+	ChannelsCommonOpts `yaml:",inline"`
+	Encryption         string
+	Username           string
+	Password           string
+	Host               string
+	Port               uint16
+	From               struct {
+		Email string
+		Name  string
+	}
+	To  []string
+	TLS struct {
+		InsecureSkipVerify bool   `yaml:"insecureSkipVerify"`
+		ServerName         string `yaml:"serverName"`
+	} `yaml:"tls"`
+}
+
 type TelegramBotChannelOpts struct {
 	ChannelsCommonOpts `yaml:",inline"`
 	Token              string
@@ -42,7 +60,8 @@ type ReportFormatOpts struct {
 type Config struct {
 	Channels struct {
 		File        FileChannelOpts
-		NotifySend  NotifySendChannelOpts  `yaml:"notifySend"`
+		NotifySend  NotifySendChannelOpts `yaml:"notifySend"`
+		Smtp        SmtpChannelOpts
 		TelegramBot TelegramBotChannelOpts `yaml:"telegramBot"`
 	}
 	LmSensors struct {

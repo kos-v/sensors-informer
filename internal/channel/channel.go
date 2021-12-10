@@ -16,5 +16,6 @@ func GetChannels(config conf.Config, formatter message.Formatter) []Channel {
 		&TelegramBotChannel{Opts: config.Channels.TelegramBot, MessageFormatter: formatter},
 		&FileChannel{Opts: config.Channels.File, MessageFormatter: formatter},
 		&NotifySendChannel{Opts: config.Channels.NotifySend, MessageFormatter: formatter},
+		&SmtpChannel{Opts: config.Channels.Smtp, MessageFormatter: formatter},
 	}
 }
