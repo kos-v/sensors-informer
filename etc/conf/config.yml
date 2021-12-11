@@ -79,7 +79,7 @@ sensors:
   # Temperature sensor options
   temperature:
     # Temperature at which a notification will be sent
-    critical: 40
+    critical: 80
     # The unit of measure for the critical parameter. Default: celsius.
     # Valid options: "c" (celsius), "f" (fahrenheit).
     unit: c
