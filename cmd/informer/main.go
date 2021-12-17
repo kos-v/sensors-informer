@@ -5,6 +5,7 @@ import (
 	"github.com/kos-v/sensors-informer/internal"
 	"github.com/kos-v/sensors-informer/internal/channel"
 	conf "github.com/kos-v/sensors-informer/internal/config"
+	"github.com/kos-v/sensors-informer/internal/detection"
 	"github.com/kos-v/sensors-informer/internal/message"
 	"github.com/kos-v/sensors-informer/internal/report"
 	"github.com/kos-v/sensors-informer/internal/sensor"
@@ -29,12 +30,17 @@ func main() {
 	}
 	listener.Listen()
 
-	detector := internal.Detector{
-		CriticalTemperature: config.Sensors.Temperature.Critical,
-		PollingInterval:     config.Sensors.PollingInterval,
-		Reader:              &sensor.CommandReader{config.LmSensors.Command},
-		Rch:                 rch,
-		TemperatureUnit:     config.Sensors.Temperature.Unit,
+	sensorsReader := &sensor.CommandReader{Command: config.LmSensors.Command}
+	watcher := detection.Watcher{
+		Detectors: []detection.Detector{
+			&detection.TemperatureDetector{
+				Critical: config.Sensors.Temperature.Critical,
+				Reader:   sensorsReader,
+				Unit:     config.Sensors.Temperature.Unit,
+			},
+		},
+		Interval:      config.Sensors.PollingInterval,
+		ReportChannel: rch,
 	}
-	detector.Run()
+	watcher.Run()
 }
