@@ -30,9 +30,11 @@ func main() {
 	listener.Listen()
 
 	detector := internal.Detector{
-		Config: *config,
-		Reader: &sensor.CommandReader{config.LmSensors.Command},
-		Rch:    rch,
+		CriticalTemperature: config.Sensors.Temperature.Critical,
+		PollingInterval:     config.Sensors.PollingInterval,
+		Reader:              &sensor.CommandReader{config.LmSensors.Command},
+		Rch:                 rch,
+		TemperatureUnit:     config.Sensors.Temperature.Unit,
 	}
 	detector.Run()
 }

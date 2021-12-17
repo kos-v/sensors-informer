@@ -1,7 +1,6 @@
 package internal
 
 import (
-	"github.com/kos-v/sensors-informer/internal/config"
 	r "github.com/kos-v/sensors-informer/internal/report"
 	s "github.com/kos-v/sensors-informer/internal/sensor"
 	"github.com/kos-v/sensors-informer/internal/temperature"
@@ -12,9 +11,11 @@ import (
 )
 
 type Detector struct {
-	Config config.Config
-	Reader s.Reader
-	Rch    chan r.Report
+	CriticalTemperature temperature.Value
+	PollingInterval     uint
+	Reader              s.Reader
+	Rch                 chan r.Report
+	TemperatureUnit     temperature.Unit
 }
 
 func (d *Detector) Run() {
@@ -34,7 +35,7 @@ func (d *Detector) Run() {
 				log.Printf("Error: %s", err.Error())
 			}
 
-			time.Sleep(time.Duration(d.Config.Sensors.PollingInterval) * time.Second)
+			time.Sleep(time.Duration(d.PollingInterval) * time.Second)
 		}
 	}()
 }
@@ -54,10 +55,10 @@ func (d *Detector) detect() (r.Report, error) {
 			}
 
 			tempVal := temperature.Value(sensor.GetInputInfo().GetValueAsInt())
-			if d.Config.Sensors.Temperature.Unit == temperature.UnitFahrenheit {
+			if d.TemperatureUnit == temperature.UnitFahrenheit {
 				tempVal = convert.ToFahrenheit(temperature.UnitCelsius, tempVal)
 			}
-			if tempVal >= d.Config.Sensors.Temperature.Critical {
+			if tempVal >= d.CriticalTemperature {
 				report.AddSensorReport(bus, sensor)
 			}
 		}
