@@ -93,7 +93,7 @@ channels:
       # Sender name
       name: Sensors Informer
     # List of email recipients
-    to: [ recipient@example.local]
+    to: [recipient@example.local]
     # Encryption type. Valid values: ssl, tls, starttls.
     encryption: ssl
     # TLS encryption parameters
