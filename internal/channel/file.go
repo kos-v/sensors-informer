@@ -7,6 +7,7 @@ import (
 	"github.com/kos-v/sensors-informer/internal/message"
 	"github.com/kos-v/sensors-informer/internal/report"
 	"os"
+	"strings"
 )
 
 type FileChannel struct {
@@ -53,11 +54,8 @@ func (ch *FileChannel) format(r report.Report) string {
 		msg += t + "\n"
 	}
 
-	for _, v := range ch.MessageFormatter.FormatBodyRows(&r) {
-		msg += v + "\n"
-	}
-
-	msg += "\n"
+	msg += strings.Join(ch.MessageFormatter.FormatBodyRows(&r), "\n")
+	msg += "\n\n"
 
 	return msg
 }

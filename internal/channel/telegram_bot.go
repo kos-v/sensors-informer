@@ -7,6 +7,7 @@ import (
 	"github.com/kos-v/sensors-informer/internal/message"
 	"github.com/kos-v/sensors-informer/internal/report"
 	"github.com/kos-v/sensors-informer/internal/security"
+	"strings"
 )
 
 type TelegramBotChannel struct {
@@ -35,9 +36,9 @@ func (ch *TelegramBotChannel) format(r report.Report) string {
 	if t := ch.MessageFormatter.FormatTitle(&r); t != "" {
 		msg += t + "\n"
 	}
-	for _, v := range ch.MessageFormatter.FormatBodyRows(&r) {
-		msg += v + "\n"
-	}
+
+	msg += strings.Join(ch.MessageFormatter.FormatBodyRows(&r), "\n")
+
 	return msg
 }
 
