@@ -7,6 +7,7 @@ import (
 )
 
 type Channel interface {
+	GetName() string
 	IsEnable() bool
 	Send(r report.Report) error
 }

@@ -15,6 +15,10 @@ type NotifySendChannel struct {
 	MessageFormatter message.Formatter
 }
 
+func (ch *NotifySendChannel) GetName() string {
+	return "notifySend"
+}
+
 func (ch *NotifySendChannel) IsEnable() bool {
 	return ch.Opts.Enable
 }

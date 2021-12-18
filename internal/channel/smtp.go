@@ -16,6 +16,10 @@ type SmtpChannel struct {
 	MessageFormatter message.Formatter
 }
 
+func (ch *SmtpChannel) GetName() string {
+	return "smtp"
+}
+
 func (ch *SmtpChannel) IsEnable() bool {
 	return ch.Opts.Enable
 }

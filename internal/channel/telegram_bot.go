@@ -15,6 +15,10 @@ type TelegramBotChannel struct {
 	MessageFormatter message.Formatter
 }
 
+func (ch *TelegramBotChannel) GetName() string {
+	return "telegramBot"
+}
+
 func (ch *TelegramBotChannel) IsEnable() bool {
 	return ch.Opts.Enable
 }

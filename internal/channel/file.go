@@ -15,6 +15,10 @@ type FileChannel struct {
 	MessageFormatter message.Formatter
 }
 
+func (ch *FileChannel) GetName() string {
+	return "file"
+}
+
 func (ch *FileChannel) IsEnable() bool {
 	return ch.Opts.Enable
 }
