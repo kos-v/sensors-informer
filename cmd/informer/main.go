@@ -23,11 +23,11 @@ func main() {
 
 	rch := make(chan report.Report)
 
-	listener := internal.ReportListener{
-		Ch:            rch,
-		Channels:      channel.GetChannels(*config, &message.PredictableFormatter{Opts: config.Report.Format}),
-		RepeatTimeout: config.Report.RepeatTimeout,
-	}
+	listener := internal.NewReportListener(
+		config.Report.RepeatTimeout,
+		channel.GetChannels(*config, &message.PredictableFormatter{Opts: config.Report.Format}),
+		rch,
+	)
 	listener.Listen()
 
 	sensorsReader := &sensor.CommandReader{Command: config.LmSensors.Command}
