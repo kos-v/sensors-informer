@@ -24,9 +24,9 @@ func main() {
 	rch := make(chan report.Report)
 
 	listener := internal.ReportListener{
-		Ch:       rch,
-		Channels: channel.GetChannels(*config, &message.PredictableFormatter{Opts: config.Report.Format}),
-		Config:   *config,
+		Ch:            rch,
+		Channels:      channel.GetChannels(*config, &message.PredictableFormatter{Opts: config.Report.Format}),
+		RepeatTimeout: config.Report.RepeatTimeout,
 	}
 	listener.Listen()
 

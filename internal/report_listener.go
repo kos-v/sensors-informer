@@ -2,18 +2,16 @@ package internal
 
 import (
 	"github.com/kos-v/sensors-informer/internal/channel"
-	"github.com/kos-v/sensors-informer/internal/config"
 	r "github.com/kos-v/sensors-informer/internal/report"
 	"log"
 	"time"
 )
 
 type ReportListener struct {
-	Ch       chan r.Report
-	Channels []channel.Channel
-	Config   config.Config
-
-	lastSendTime int64
+	Ch            chan r.Report
+	Channels      []channel.Channel
+	RepeatTimeout uint
+	lastSendTime  int64
 }
 
 func (l *ReportListener) Listen() {
@@ -43,5 +41,5 @@ func (l *ReportListener) handle(report r.Report) {
 }
 
 func (l *ReportListener) canSendByTimeout() bool {
-	return time.Now().Unix() >= l.lastSendTime+int64(l.Config.Report.RepeatTimeout)
+	return time.Now().Unix() >= l.lastSendTime+int64(l.RepeatTimeout)
 }
