@@ -10,50 +10,50 @@ import (
 
 func NewReportListener(repeatTimeout uint, channels []channel.Channel, rch chan r.Report) *ReportListener {
 	return &ReportListener{
-		Ch:            rch,
-		Channels:      channels,
-		RepeatTimeout: repeatTimeout,
-		LastSendTime:  &lastSendTimeStorage{storage: make(map[string]int64)},
+		ch:            rch,
+		channels:      channels,
+		repeatTimeout: repeatTimeout,
+		lastSendTime:  &lastSendTimeStorage{storage: make(map[string]int64)},
 	}
 }
 
 type ReportListener struct {
-	Ch            chan r.Report
-	Channels      []channel.Channel
-	RepeatTimeout uint
-	LastSendTime  *lastSendTimeStorage
+	ch            chan r.Report
+	channels      []channel.Channel
+	repeatTimeout uint
+	lastSendTime  *lastSendTimeStorage
 }
 
 func (l *ReportListener) Listen() {
 	go func() {
-		for report := range l.Ch {
+		for report := range l.ch {
 			l.handle(report)
 		}
 	}()
 }
 
 func (l *ReportListener) handle(report r.Report) {
-	for _, item := range l.Channels {
+	for _, item := range l.channels {
 		tch := item
 		if !tch.IsEnable() {
 			continue
 		}
 
 		currTime := time.Now().Unix()
-		if !l.LastSendTime.Has(tch.GetName()) || currTime >= l.nexSendTime(tch.GetName()) {
+		if !l.lastSendTime.Has(tch.GetName()) || currTime >= l.nexSendTime(tch.GetName()) {
 			go func() {
 				err := tch.Send(report)
 				if err != nil {
 					log.Printf("Error: %s\n", err.Error())
 				}
-				l.LastSendTime.Set(tch.GetName(), time.Now().Unix())
+				l.lastSendTime.Set(tch.GetName(), time.Now().Unix())
 			}()
 		}
 	}
 }
 
 func (l *ReportListener) nexSendTime(channel string) int64 {
-	return l.LastSendTime.Get(channel) + int64(l.RepeatTimeout)
+	return l.lastSendTime.Get(channel) + int64(l.repeatTimeout)
 }
 
 type lastSendTimeStorage struct {
