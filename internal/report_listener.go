@@ -10,23 +10,23 @@ import (
 
 func NewReportListener(repeatTimeout uint, channels []channel.Channel, rch chan r.Report) *ReportListener {
 	return &ReportListener{
-		ch:            rch,
 		channels:      channels,
+		rch:           rch,
 		repeatTimeout: repeatTimeout,
 		lastSendTime:  &lastSendTimeStorage{storage: make(map[string]int64)},
 	}
 }
 
 type ReportListener struct {
-	ch            chan r.Report
 	channels      []channel.Channel
+	rch           chan r.Report
 	repeatTimeout uint
 	lastSendTime  *lastSendTimeStorage
 }
 
 func (l *ReportListener) Listen() {
 	go func() {
-		for report := range l.ch {
+		for report := range l.rch {
 			l.handle(report)
 		}
 	}()
