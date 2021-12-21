@@ -1,5 +1,7 @@
 .PHONY: build
 
+DC_DEV_CONF=docker-compose.dev.yml
+
 build: clean
 	@go build -o build/sensors-informer cmd/informer/main.go
 	@cp etc/conf/config.yml build/config.yml
@@ -18,3 +20,6 @@ uninstall:
 
 fmt:
 	@go fmt ./...
+
+build-dev-env:
+	@docker-compose -f ${DC_DEV_CONF} up --build -d
