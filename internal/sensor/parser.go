@@ -47,6 +47,7 @@ type SensorInfo struct {
 	Value    string
 }
 
+// TODO rename to GetValueAsFloat
 func (i SensorInfo) GetValueAsInt() float32 {
 	f, err := strconv.ParseFloat(i.Value, 32)
 	if err != nil {
