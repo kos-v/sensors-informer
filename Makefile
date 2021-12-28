@@ -23,3 +23,4 @@ fmt:
 
 build-dev-env:
 	@docker-compose -f ${DC_DEV_CONF} up --build -d
+	@docker-compose -f ${DC_DEV_CONF} exec node sh -c "npm install -g @vue/cli"
