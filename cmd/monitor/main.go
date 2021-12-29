@@ -3,12 +3,11 @@ package main
 import (
 	"flag"
 	"github.com/gin-gonic/gin"
+	v1 "github.com/kos-v/sensors-informer/api/monitor/v1"
 	conf "github.com/kos-v/sensors-informer/internal/config"
 	"github.com/kos-v/sensors-informer/internal/sensor"
-	"github.com/kos-v/sensors-informer/internal/temperature"
 	"log"
 	"net/http"
-	"time"
 )
 
 func main() {
@@ -24,65 +23,17 @@ func main() {
 	}
 
 	router := gin.Default()
+	api := v1.API{
+		Router:  router,
+		SReader: &sensor.CommandReader{Command: config.LmSensors.Command},
+	}
+	api.Handle()
+
 	router.LoadHTMLGlob(*tmplDir + "/*")
 	router.Static("/dist", *staticsDir)
-
-	sr := &sensor.CommandReader{Command: config.LmSensors.Command}
-	router.GET("/api/v1/indicators/status", func(c *gin.Context) {
-		busList, err := sr.ReadTemperatureSensors()
-		if err != nil {
-			log.Printf("error: %v\n", err)
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"success": false,
-				"code":    http.StatusInternalServerError,
-				"error":   "server error",
-			})
-			return
-		}
-		c.JSON(http.StatusOK, gin.H{
-			"success": true,
-			"code":    http.StatusOK,
-			"result": gin.H{
-				"indications": formatSensorsOut(busList),
-				"temperature": gin.H{"unit": temperature.UnitCelsius},
-				"timestamp":   time.Now().Unix(),
-			},
-		})
-	})
-
 	router.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", nil)
 	})
 
 	router.Run(*addr)
-}
-
-func formatSensorsOut(busList []sensor.Bus) []map[string]interface{} {
-	result := []map[string]interface{}{}
-
-	for _, b := range busList {
-		bResult := map[string]interface{}{
-			"name": b.Name,
-			"type": sensor.SensorTypeTemperature,
-		}
-
-		sResult := []map[string]interface{}{}
-		for _, s := range b.Sensors {
-			if !s.HasInputInfo() {
-				continue
-			}
-
-			sResult = append(sResult, map[string]interface{}{
-				"name":  s.Name,
-				"value": s.GetInputInfo().GetValueAsInt(),
-			})
-		}
-		bResult["sensors"] = sResult
-
-		if len(sResult) > 0 {
-			result = append(result, bResult)
-		}
-	}
-
-	return result
 }
