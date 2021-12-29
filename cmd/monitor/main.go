@@ -13,8 +13,8 @@ import (
 func main() {
 	addr := flag.String("addr", ":80", "TCP address for the server to listen on, in the form \"host:port\"")
 	specificConfig := flag.String("config", "", "The path to a specific configuration file")
-	tmplDir := flag.String("tmplDir", "./web/monitor/templates", "Path to html templates")
-	staticsDir := flag.String("staticsDir", "./web/monitor/dist", "Path to static files")
+	tmplDir := flag.String("tmplDir", "./ui/monitor/templates", "Path to html templates")
+	staticsDir := flag.String("staticsDir", "./ui/monitor/dist", "Path to static files")
 	flag.Parse()
 
 	config, err := conf.LoadConfig(*specificConfig)
