@@ -7,7 +7,7 @@ Requires=lm-sensors.service
 Type=simple
 Restart=always
 User=user
-ExecStart=/usr/local/bin/sensors-informer
+ExecStart=/usr/local/bin/sensinf
 
 [Install]
 WantedBy=multi-user.target
