@@ -19,7 +19,7 @@ func (r *Report) AddSensorReport(b sensor.Bus, s sensor.Sensor) {
 		BusName     string
 		SensorName  string
 		SensorValue float32
-	}{BusName: b.Name, SensorName: s.Name, SensorValue: s.GetInputInfo().GetValueAsInt()})
+	}{BusName: b.Name, SensorName: s.Name, SensorValue: s.GetInputInfo().GetValueAsFloat()})
 }
 
 func (r *Report) HasSensorReports() bool {

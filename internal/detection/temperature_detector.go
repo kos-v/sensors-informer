@@ -28,7 +28,7 @@ func (d *TemperatureDetector) Detect() (*r.Report, error) {
 				continue
 			}
 
-			tempVal := temperature.Value(sensor.GetInputInfo().GetValueAsInt())
+			tempVal := temperature.Value(sensor.GetInputInfo().GetValueAsFloat())
 			if d.Unit == temperature.UnitFahrenheit {
 				tempVal = convert.ToFahrenheit(temperature.UnitCelsius, tempVal)
 			}
