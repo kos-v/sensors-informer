@@ -7,10 +7,6 @@ import (
 )
 
 const (
-	SensorTypeFan         = "fan"
-	SensorTypeTemperature = "temperature"
-	SensorTypeUnknown     = "unknown"
-
 	busNamePattern    = `^(\w+-+)+\d+$`
 	sensorInfoPattern = `^  (\w*)(:\s*)(\d+\.\d+)$`
 	sensorNamePattern = `^([^ ].+):$`
