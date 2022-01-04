@@ -19,7 +19,7 @@ func main() {
 
 	config, err := conf.LoadConfig(*specificConfig)
 	if err != nil {
-		log.Fatalf("erro: %v", err)
+		log.Fatalf("error: %v", err)
 	}
 
 	router := gin.Default()
