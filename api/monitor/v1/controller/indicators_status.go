@@ -52,7 +52,7 @@ func (c *IndicatorsStatusController) formatSensorsOut(busList []sensor.Bus) []ma
 
 			sResult = append(sResult, map[string]interface{}{
 				"name":  s.Name,
-				"value": s.GetInputInfo().GetValueAsInt(),
+				"value": s.GetInputInfo().GetValueAsFloat(),
 			})
 		}
 		bResult["sensors"] = sResult
