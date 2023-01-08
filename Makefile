@@ -16,5 +16,5 @@ uninstall:
 	@rm -f /usr/local/bin/sensinf
 	@rm -rf /etc/sensors-informer/
 
-fmt:
+dev-fmt:
 	@go fmt ./...
