@@ -16,5 +16,9 @@ uninstall:
 	@rm -f /usr/local/bin/sensinf
 	@rm -rf /etc/sensors-informer/
 
+dev-build: clean
+	@go build -o build/sensinf cmd/informer/main.go
+	@cp config.yml build/config.yml
+
 dev-fmt:
 	@go fmt ./...
