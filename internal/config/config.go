@@ -50,6 +50,13 @@ type TelegramBotChannelOpts struct {
 	ChatId             int64 `yaml:"chatId"`
 }
 
+type ChannelListOpts struct {
+	File        FileChannelOpts
+	NotifySend  NotifySendChannelOpts `yaml:"notifySend"`
+	Smtp        SmtpChannelOpts
+	TelegramBot TelegramBotChannelOpts `yaml:"telegramBot"`
+}
+
 type ReportFormatOpts struct {
 	TemperatureUnit temperature.Unit `yaml:"temperatureUnit"`
 	Title           struct {
@@ -58,12 +65,7 @@ type ReportFormatOpts struct {
 }
 
 type Config struct {
-	Channels struct {
-		File        FileChannelOpts
-		NotifySend  NotifySendChannelOpts `yaml:"notifySend"`
-		Smtp        SmtpChannelOpts
-		TelegramBot TelegramBotChannelOpts `yaml:"telegramBot"`
-	}
+	Channels  ChannelListOpts `yaml:"channels,inline"`
 	LmSensors struct {
 		Command string
 	} `yaml:"lmSensors"`
