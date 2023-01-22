@@ -10,21 +10,21 @@ import (
 	"strings"
 )
 
-type FileChannel struct {
-	Opts             config.FileChannelOpts
-	MessageFormatter message.Formatter
+type FileChannelService struct {
+	opts             config.FileChannelOpts
+	messageFormatter message.Formatter
 }
 
-func (ch *FileChannel) GetName() string {
+func (ch *FileChannelService) GetName() string {
 	return "file"
 }
 
-func (ch *FileChannel) IsEnable() bool {
-	return ch.Opts.Enable
+func (ch *FileChannelService) IsEnable() bool {
+	return ch.opts.Enable
 }
 
-func (ch *FileChannel) Send(r report.Report) error {
-	path := ch.Opts.Path
+func (ch *FileChannelService) Send(r report.Report) error {
+	path := ch.opts.Path
 	if path == "" {
 		return fmt.Errorf("path is not specified in the config file")
 	}
@@ -52,14 +52,21 @@ func (ch *FileChannel) Send(r report.Report) error {
 	return nil
 }
 
-func (ch *FileChannel) format(r report.Report) string {
+func (ch *FileChannelService) format(r report.Report) string {
 	msg := ""
-	if t := ch.MessageFormatter.FormatTitle(&r); t != "" {
+	if t := ch.messageFormatter.FormatTitle(&r); t != "" {
 		msg += t + "\n"
 	}
 
-	msg += strings.Join(ch.MessageFormatter.FormatBodyRows(&r), "\n")
+	msg += strings.Join(ch.messageFormatter.FormatBodyRows(&r), "\n")
 	msg += "\n\n"
 
 	return msg
+}
+
+func NewFileChannelService(
+	opts config.FileChannelOpts,
+	msgFormatter message.Formatter,
+) *FileChannelService {
+	return &FileChannelService{opts: opts, messageFormatter: msgFormatter}
 }
